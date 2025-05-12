@@ -1,0 +1,631 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>EduProHub 🚀</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"/>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+  <style>
+    :root {
+      --primary-color: #4361ee;
+      --secondary-color: #3f37c9;
+      --success-color: #4cc9f0;
+      --danger-color: #f72585;
+      --warning-color: #f8961e;
+      --info-color: #4895ef;
+      --light-color: #f8f9fa;
+      --dark-color: #212529;
+      --student-color: #4361ee;
+      --teacher-color: #4cc9f0;
+      --card-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+      --transition: all 0.3s ease;
+    }
+  
+    body {
+      background-color: #f0f2f5;
+      padding-top: 20px;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      color: #333;
+      line-height: 1.6;
+    }
+  
+    /* Cards */
+    .card {
+      margin-bottom: 25px;
+      border: none;
+      border-radius: 10px;
+      box-shadow: var(--card-shadow);
+      transition: var(--transition);
+      overflow: hidden;
+    }
+  
+    .card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+    }
+  
+    .student-card {
+      border-left: 5px solid var(--student-color);
+    }
+  
+    .teacher-card {
+      border-left: 5px solid var(--teacher-color);
+    }
+  
+    .card-header {
+      padding: 1rem 1.5rem;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+    }
+  
+    .card-header h5 {
+      font-weight: 600;
+    }
+  
+    /* Badges */
+    .user-type-badge {
+      font-size: 0.75rem;
+      font-weight: 600;
+      padding: 0.35em 0.65em;
+      border-radius: 50px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+  
+    .badge-student {
+      background-color: rgba(67, 97, 238, 0.1);
+      color: var(--student-color);
+    }
+  
+    .badge-teacher {
+      background-color: rgba(76, 201, 240, 0.1);
+      color: var(--teacher-color);
+    }
+  
+    /* Tables */
+    #userTable {
+      --bs-table-bg: transparent;
+      --bs-table-striped-bg: rgba(0, 0, 0, 0.02);
+      --bs-table-hover-bg: rgba(67, 97, 238, 0.05);
+    }
+  
+    #userTable tbody tr {
+      transition: var(--transition);
+    }
+  
+    #userTable tbody tr:hover {
+      transform: scale(1.01);
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+  
+    /* Forms */
+    .form-control {
+      padding: 0.75rem 1rem;
+      border-radius: 8px;
+      border: 1px solid #e2e8f0;
+      transition: var(--transition);
+      font-size: 1rem;
+    }
+  
+    .form-control:focus {
+      border-color: var(--primary-color);
+      box-shadow: 0 0 0 0.25rem rgba(67, 97, 238, 0.25);
+    }
+  
+    .form-check-input:checked {
+      background-color: var(--primary-color);
+      border-color: var(--primary-color);
+    }
+  
+    /* Buttons */
+    .btn {
+      padding: 0.65rem 1.25rem;
+      border-radius: 8px;
+      font-weight: 500;
+      transition: var(--transition);
+    }
+  
+    .btn-primary {
+      background-color: var(--primary-color);
+      border-color: var(--primary-color);
+    }
+  
+    .btn-primary:hover {
+      background-color: var(--secondary-color);
+      border-color: var(--secondary-color);
+    }
+  
+    .btn-success {
+      background-color: var(--success-color);
+      border-color: var(--success-color);
+    }
+  
+    .btn-outline-danger:hover {
+      color: white;
+    }
+  
+    /* Navigation */
+    .nav-tabs {
+      padding: 0.75rem 1.5rem;
+      border-radius: 10px;
+      box-shadow: var(--card-shadow);
+      background-color: white;
+      border: none;
+      margin-bottom: 30px;
+    }
+  
+    .nav-link {
+      color: #64748b;
+      font-weight: 500;
+      border: none;
+      padding: 0.75rem 1.25rem;
+      border-radius: 8px;
+      transition: var(--transition);
+    }
+  
+    .nav-link.active {
+      color: var(--primary-color);
+      background-color: rgba(67, 97, 238, 0.1);
+    }
+  
+    .nav-link:hover:not(.active) {
+      color: var(--primary-color);
+      background-color: rgba(67, 97, 238, 0.05);
+    }
+  
+    /* Login/Register Containers */
+    .login-container {
+      max-width: 600px;
+      margin: 0 auto;
+      animation: fadeIn 0.5s ease;
+    }
+  
+    .login-container h1 {
+      font-weight: 700;
+      color: var(--dark-color);
+      margin-bottom: 0.5rem;
+    }
+  
+    .login-container .text-muted {
+      color: #64748b !important;
+    }
+  
+    /* Alerts & Notifications */
+    #userInfo, #errorContainer {
+      position: fixed;
+      right: 20px;
+      z-index: 1000;
+      max-width: 350px;
+      border-radius: 10px;
+      box-shadow: var(--card-shadow);
+      opacity: 0;
+      transform: translateX(100%);
+      transition: all 0.4s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+    }
+  
+    #userInfo.show, #errorContainer.show {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  
+    #userInfo {
+      top: 20px;
+      background-color: var(--info-color);
+      color: white;
+      border: none;
+    }
+  
+    #errorContainer {
+      top: 80px;
+    }
+  
+    /* Loading Spinners */
+    .loading-spinner {
+      display: none;
+      vertical-align: middle;
+    }
+  
+    /* Form Modes */
+    .form-mode-view {
+      background-color: #f8f9fa;
+      cursor: not-allowed;
+    }
+  
+    /* Modal */
+    .modal-content {
+      border: none;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+    }
+  
+    .modal-header {
+      padding: 1.25rem 1.5rem;
+    }
+  
+    /* Utility Classes */
+    .hidden {
+      display: none;
+    }
+  
+    [inert] {
+      pointer-events: none;
+      cursor: default;
+    }
+  
+    [inert] * {
+      pointer-events: none;
+    }
+  
+    /* Animations */
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  
+    /* User Form Container */
+    #userManagementFormContainer {
+      position: sticky;
+      top: 20px;
+    }
+    
+    #userManagementFormContainer .card {
+      min-height: 100%;
+    }
+    
+    #userManagementFormContainer .form-label {
+      font-weight: 500;
+      margin-bottom: 0.5rem;
+    }
+    
+    /* Icon Styles */
+    .title-icon {
+      margin-right: 10px;
+      font-size: 1.2em;
+    }
+    
+    .action-icon {
+      margin-right: 5px;
+    }
+    
+    /* Responsive Adjustments */
+    @media (max-width: 992px) {
+      #userManagementFormContainer {
+        position: static;
+        margin-top: 30px;
+      }
+    }
+    
+    @media (max-width: 768px) {
+      .nav-tabs {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+      
+      #logoutBtn {
+        margin-left: 0;
+        margin-top: 10px;
+      }
+      
+      .login-container {
+        padding: 0 15px;
+      }
+    }
+  
+    /* Custom Scrollbar */
+    ::-webkit-scrollbar {
+      width: 8px;
+      height: 8px;
+    }
+  
+    ::-webkit-scrollbar-track {
+      background: #f1f1f1;
+      border-radius: 10px;
+    }
+  
+    ::-webkit-scrollbar-thumb {
+      background: #a1a1a1;
+      border-radius: 10px;
+    }
+  
+    ::-webkit-scrollbar-thumb:hover {
+      background: #818181;
+    }
+    
+    /* Fun Elements */
+    .fun-emoji {
+      font-size: 1.2em;
+      margin-right: 5px;
+    }
+    
+    .welcome-message {
+      font-size: 1.1rem;
+      color: #64748b;
+      margin-bottom: 1.5rem;
+    }
+    
+    /* Improved Form Section */
+    .form-section {
+      margin-bottom: 1.5rem;
+    }
+    
+    .form-section-title {
+      font-size: 1.1rem;
+      font-weight: 600;
+      margin-bottom: 1rem;
+      color: var(--primary-color);
+      display: flex;
+      align-items: center;
+    }
+    
+    /* Larger inputs for teacher form */
+    .teacher-form .form-control {
+      padding: 1rem;
+      font-size: 1.05rem;
+    }
+    
+    .teacher-form .btn {
+      padding: 0.8rem 1.5rem;
+      font-size: 1.05rem;
+    }
+  </style>
+</head>
+<body>
+  <div id="userInfo" class="alert alert-info" style="display: none;"></div>
+  <div id="errorContainer"></div>
+
+  <!-- Login Container (shown by default) -->
+  <div class="container login-container" id="loginContainer">
+    <div class="row justify-content-center">
+      <div class="col-12 text-center mb-4">
+        <h1 class="animate__animated animate__fadeInDown">EduProHub <i class="bi bi-mortarboard-fill text-primary"></i></h1>
+        <p class="welcome-message animate__animated animate__fadeIn animate__delay-1s">¡Bienvenido! Por favor inicia sesión para continuar 🎓</p>
+      </div>
+      <div class="col-md-10">
+        <div class="card animate__animated animate__fadeInUp animate__delay-1s">
+          <div class="card-header bg-primary text-white d-flex justify-content-center align-items-center">
+            <i class="bi bi-door-open-fill me-2"></i>
+            <h5 class="mb-0 text-center">Inicio de Sesión</h5>
+          </div>
+          <div class="card-body">
+            <form id="loginForm">
+              <div class="mb-3 form-section">
+                <label for="loginEmail" class="form-label"><i class="bi bi-envelope-fill me-2 text-primary"></i>Correo Electrónico</label>
+                <input type="email" class="form-control" id="loginEmail" required autocomplete="username" placeholder="tu@email.com" />
+              </div>
+              <div class="mb-3 form-section">
+                <label for="loginPassword" class="form-label"><i class="bi bi-lock-fill me-2 text-primary"></i>Contraseña</label>
+                <input type="password" class="form-control" id="loginPassword" required autocomplete="current-password" placeholder="••••••••" />
+              </div>
+              <button type="submit" class="btn btn-primary w-100 mt-4">
+                <span id="loginText"><i class="bi bi-box-arrow-in-right me-2"></i> Iniciar Sesión</span>
+                <span class="spinner-border spinner-border-sm loading-spinner" role="status" aria-hidden="true"></span>
+              </button>
+              <div class="text-center mt-3">
+                <p>¿No tienes una cuenta? <a href="#" id="showRegister" class="fw-bold">¡Regístrate ahora! <i class="bi bi-arrow-right"></i></a></p>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Register Container (hidden by default) -->
+  <div class="container login-container hidden" id="registerContainer" inert>
+    <div class="row justify-content-center">
+      <div class="col-12 text-center mb-4">
+        <h1 class="animate__animated animate__fadeInDown">Registro de Usuario <i class="bi bi-person-plus-fill text-success"></i></h1>
+        <p class="welcome-message animate__animated animate__fadeIn animate__delay-1s">Crea una nueva cuenta para comenzar 🚀</p>
+      </div>
+      <div class="col-md-10">
+        <div class="card animate__animated animate__fadeInUp animate__delay-1s">
+          <div class="card-header bg-success text-white d-flex justify-content-center align-items-center">
+            <i class="bi bi-person-plus-fill me-2"></i>
+            <h5 class="mb-0 text-center">Registro</h5>
+          </div>
+          <div class="card-body">
+            <form id="registerForm">
+              <div class="mb-3 form-section">
+                <label for="regIdentification" class="form-label"><i class="bi bi-card-checklist me-2 text-success"></i>Identificación</label>
+                <input type="number" class="form-control" id="regIdentification" required placeholder="123456789" />
+              </div>
+              <div class="mb-3 form-section">
+                <label for="regUsername" class="form-label"><i class="bi bi-person-badge-fill me-2 text-success"></i>Nombre de Usuario</label>
+                <input type="text" class="form-control" id="regUsername" required autocomplete="username" placeholder="tu_usuario" />
+              </div>
+              <div class="mb-3 form-section">
+                <label for="regPassword" class="form-label"><i class="bi bi-key-fill me-2 text-success"></i>Contraseña</label>
+                <input type="password" class="form-control" id="regPassword" required autocomplete="new-password" placeholder="••••••••" />
+              </div>
+              <div class="mb-3 form-section">
+                <label for="regEmail" class="form-label"><i class="bi bi-envelope-at-fill me-2 text-success"></i>Correo Electrónico</label>
+                <input type="email" class="form-control" id="regEmail" required autocomplete="email" placeholder="tu@email.com" />
+              </div>
+              <div class="mb-3 form-section">
+                <label class="form-label"><i class="bi bi-people-fill me-2 text-success"></i>Tipo de Usuario</label>
+                <div class="form-check mt-2">
+                  <input class="form-check-input" type="radio" name="regUserType" id="regStudentUser" value="student" checked />
+                  <label class="form-check-label" for="regStudentUser"><i class="bi bi-mortarboard me-1"></i> Estudiante</label>
+                </div>
+                <div class="form-check">
+                  <input class="form-check-input" type="radio" name="regUserType" id="regTeacherUser" value="teacher" />
+                  <label class="form-check-label" for="regTeacherUser"><i class="bi bi-person-video3 me-1"></i> Docente</label>
+                </div>
+              </div>
+              <button type="submit" class="btn btn-success w-100 mt-4">
+                <span id="registerText"><i class="bi bi-save-fill me-2"></i> Registrar</span>
+                <span class="spinner-border spinner-border-sm loading-spinner" role="status" aria-hidden="true"></span>
+              </button>
+              <div class="text-center mt-3">
+                <p>¿Ya tienes una cuenta? <a href="#" id="showLogin" class="fw-bold"><i class="bi bi-arrow-left me-1"></i> Inicia sesión aquí</a></p>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main Application Container (hidden until login) -->
+  <div class="container hidden" id="appContainer" inert>
+    <!-- Navigation Tabs -->
+    <ul class="nav nav-tabs animate__animated animate__fadeInDown">
+      <li class="nav-item">
+        <a class="nav-link active" aria-current="page" href="#"><i class="bi bi-people-fill title-icon"></i>Gestión de Usuarios</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="projects.html"><i class="bi bi-folder-fill title-icon"></i>Proyectos</a>
+      </li>
+      <li class="nav-item ms-auto">
+        <button id="logoutBtn" class="btn btn-outline-danger">
+          <i class="bi bi-box-arrow-right action-icon"></i> Cerrar Sesión
+        </button>
+      </li>
+    </ul>
+  
+    <div class="row mb-4 animate__animated animate__fadeIn">
+      <div class="col-12 text-center">
+        <h1><i class="bi bi-people-fill text-primary"></i> Sistema de Gestión de Usuarios</h1>
+        <p class="text-muted">Administra usuarios con Supabase <i class="bi bi-database"></i></p>
+      </div>
+    </div>
+    <div class="row">
+      <!-- User Table -->
+      <div class="col-lg-8">
+        <div class="card animate__animated animate__fadeInLeft">
+          <div class="card-header d-flex justify-content-between align-items-center">
+            <h5 class="mb-0"><i class="bi bi-list-ul me-2"></i>Lista de Usuarios</h5>
+            <div>
+              <button id="newUserBtn" class="btn btn-sm btn-success me-2">
+                <i class="bi bi-plus-circle action-icon"></i> Nuevo Usuario
+              </button>
+              <button id="refreshBtn" class="btn btn-sm btn-outline-primary">
+                <i class="bi bi-arrow-clockwise action-icon"></i> Actualizar
+              </button>
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="table-responsive">
+              <table class="table table-hover" id="userTable">
+                <thead>
+                  <tr>
+                    <th><i class="bi bi-hash"></i> ID</th>
+                    <th><i class="bi bi-person"></i> Nombre</th>
+                    <th><i class="bi bi-envelope"></i> Email</th>
+                    <th><i class="bi bi-tag"></i> Tipo</th>
+                    <th><i class="bi bi-gear"></i> Acciones</th>
+                  </tr>
+                </thead>
+                <tbody id="userTableBody"></tbody>
+              </table>
+            </div>
+            <div class="d-flex justify-content-center">
+              <div class="spinner-border loading-spinner text-primary" role="status">
+                <span class="visually-hidden">Cargando...</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- User Form - Now larger for teachers -->
+      <div id="userManagementFormContainer" class="col-lg-4">
+        <div class="card animate__animated animate__fadeInRight teacher-form">
+          <div class="card-header d-flex justify-content-between align-items-center">
+            <h5 class="mb-0"><i class="bi bi-pencil-square me-2"></i><span id="formTitle">Gestión de Usuario</span></h5>
+            <div>
+              <button id="editBtn" class="btn btn-sm btn-outline-warning me-2" disabled>
+                <i class="bi bi-pencil action-icon"></i> Editar
+              </button>
+              <button id="deleteBtn" class="btn btn-sm btn-outline-danger" disabled>
+                <i class="bi bi-trash action-icon"></i> Eliminar
+              </button>
+            </div>
+          </div>
+          <div class="card-body">
+            <form id="userForm">
+              <input type="hidden" id="userId">
+              
+              <div class="form-section">
+                <div class="form-section-title"><i class="bi bi-card-heading"></i> Información Básica</div>
+                <div class="mb-3">
+                  <label for="identification" class="form-label">Identificación</label>
+                  <input type="number" class="form-control" id="identification" required placeholder="Ej: 123456789" />
+                </div>
+                <div class="mb-3">
+                  <label for="username" class="form-label">Nombre de Usuario</label>
+                  <input type="text" class="form-control" id="username" required placeholder="Ej: juan_perez" />
+                </div>
+              </div>
+              
+              <div class="form-section">
+                <div class="form-section-title"><i class="bi bi-shield-lock"></i> Seguridad</div>
+                <div class="mb-3">
+                  <label for="password" class="form-label">Contraseña</label>
+                  <input type="password" class="form-control" id="password" required placeholder="••••••••" />
+                  <small class="text-muted">Dejar en blanco para mantener la contraseña actual</small>
+                </div>
+              </div>
+              
+              <div class="form-section">
+                <div class="form-section-title"><i class="bi bi-info-circle"></i> Información Adicional</div>
+                <div class="mb-3">
+                  <label for="email" class="form-label">Correo Electrónico</label>
+                  <input type="email" class="form-control" id="email" required placeholder="Ej: usuario@email.com" />
+                </div>
+                <div class="mb-3">
+                  <label class="form-label">Tipo de Usuario</label>
+                  <div class="form-check mt-2">
+                    <input class="form-check-input" type="radio" name="userType" id="studentUser" value="student" checked />
+                    <label class="form-check-label" for="studentUser"><i class="bi bi-mortarboard me-1"></i> Estudiante</label>
+                  </div>
+                  <div class="form-check">
+                    <input class="form-check-input" type="radio" name="userType" id="teacherUser" value="teacher" />
+                    <label class="form-check-label" for="teacherUser"><i class="bi bi-person-video3 me-1"></i> Docente</label>
+                  </div>
+                </div>
+              </div>
+              
+              <button type="submit" class="btn btn-primary w-100 mt-3" id="submitBtn">
+                <span id="submitText"><i class="bi bi-save-fill me-2"></i> Guardar</span>
+                <span class="spinner-border spinner-border-sm loading-spinner" role="status" aria-hidden="true"></span>
+              </button>
+              <button type="button" class="btn btn-secondary w-100 mt-2" id="cancelBtn" style="display: none;">
+                <i class="bi bi-x-circle me-2"></i> Cancelar
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Delete Confirmation Modal -->
+  <div class="modal fade" id="deleteConfirmModal" tabindex="-1">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header bg-danger text-white">
+          <h5 class="modal-title"><i class="bi bi-exclamation-triangle-fill me-2"></i>Confirmar Eliminación</h5>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <p>¿Estás seguro que deseas eliminar este usuario? Esta acción no se puede deshacer. <i class="bi bi-emoji-frown"></i></p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"><i class="bi bi-x-circle me-2"></i>Cancelar</button>
+          <button type="button" class="btn btn-danger" id="confirmDeleteBtn"><i class="bi bi-trash-fill me-2"></i>Eliminar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Inert polyfill for older browsers -->
+  <script src="https://unpkg.com/wicg-inert@latest/dist/inert.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bcryptjs@2.4.3/dist/bcrypt.min.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
