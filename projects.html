@@ -77,6 +77,13 @@
   </div>
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-  <script src="js/projects.js"></script> <!-- Nuevo JS para proyectos -->
+  <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+  <script>
+    // Verify Supabase is loaded before loading our script
+    if (typeof supabase === 'undefined') {
+      console.error('Supabase library not loaded! Check the script URL');
+    }
+  </script>
+  <script src="js/projects.js"></script>
 </body>
 </html>
